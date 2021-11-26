@@ -1,0 +1,21 @@
+<ng-container *ngIf="articles">
+  <div
+    *ngFor="let article of articles | articleFilter: selectedDiary"
+    class="pin"
+  >
+    <div class="card">
+      <div class="card-header">
+        <img
+          [src]="article.img"
+          onerror="if (this.src != 'https://www.tbh-location.fr/wp-content/uploads/2019/12/news-e1544436032461.png') this.src = 'https://www.tbh-location.fr/wp-content/uploads/2019/12/news-e1544436032461.png';"
+        />
+        <div class="card-body">
+          <h4>{{ article.title }}</h4>
+          <span class="tag tag-teal">
+            <a [href]="article.url" target="_blank"> leer mas</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

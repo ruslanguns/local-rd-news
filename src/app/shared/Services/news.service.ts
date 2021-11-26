@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Observable, throwError } from 'rxjs';
 
-import { catchError, map } from 'rxjs/operators';
+import { catchError, pluck } from 'rxjs/operators';
 import { Articles } from '../interface/news.interface';
 
 @Injectable({
@@ -12,15 +13,18 @@ export class NewsService {
   apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getNews(mediaName: string) {
-    return this.http.get<Articles>(`${this.apiUrl}${mediaName}`).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((err) => {
-        console.log(err);
-        return err;
-      })
-    );
+  /**
+   * Get news! Array<Articles>
+   */
+  getNews(mediaName: string): Observable<Articles[]> {
+    return this.http
+      .get<{ data: Articles[] }>(`${this.apiUrl}${mediaName}`)
+      .pipe(
+        pluck('data'),
+        catchError((err) => {
+          console.log(err);
+          return throwError(err);
+        })
+      );
   }
 }

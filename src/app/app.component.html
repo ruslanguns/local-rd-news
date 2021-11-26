@@ -1,33 +1,33 @@
 <div class="container">
-  <div class="row">
-    <!-- <div class="card-01"></div>
-    <div class="card-01"></div>
-    <div class="card-01"></div> -->
-    <div *ngFor="let article of articles" class="card-01">
-      <div class="card-content">
-        <div class="card-header">
-          <div class="card-img">
-            <img [src]="article.img" alt="" />
-          </div>
-          <div class="card-title">
-            {{ article.title }}
-          </div>
-        </div>
-        <button>Leer mas</button>
-      </div>
-    </div>
+  <div class="sidebar">
+    <ul>
+      <li (click)="setSelectedDiary('listin')">Listin Diario</li>
+      <li (click)="setSelectedDiary('diarioLibre')">Diario Libre</li>
+      <li (click)="setSelectedDiary('nacional')">El Nacional</li>
+      <li (click)="setSelectedDiary('nuevoDiario')">Nuevo Diario</li>
+      <li (click)="setSelectedDiary('remolacha')">Remolacha.net</li>
+    </ul>
   </div>
+
+  <div class="content" id="main">
+    <article>
+      <!-- <div class="loadingDiv">
+        <h3>Loadind</h3>
+      </div> -->
+
+      <ng-container *ngIf="articlesVm$ | async as articles">
+        <app-news-card
+          [articles]="articles"
+          [selectedDiary]="selectedDiary"
+        ></app-news-card>
+      </ng-container>
+
+      <ng-template #loading>
+        <div>Cargando noticias....</div>
+      </ng-template>
+    </article>
+  </div>
+  <footer>
+    <p>&copy; by Neryad 2020</p>
+  </footer>
 </div>
-<!-- <div *ngFor="let article of articles" class="card-01">
-      <div class="card-content">
-        <div class="card-header">
-          <div class="card-img">
-            <img [src]="article.img" alt="" />
-          </div>
-          <div class="card-title">
-            {{ article.title }}
-          </div>
-        </div>
-        <button>Leer mas</button>
-      </div>
-    </div> -->
